@@ -11,13 +11,37 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public $timestamps =false;
+    protected $table = 'users';
+
+    
+public function tasks()
+{
+    return $this->belongsToMany('App\Models\Task');
+}
+
+public function task()
+{
+    return $this->hasMany('App\Models\Task');
+}
+
+public function comment()
+{
+    return $this->hasMany('App\Models\Comment');
+}
+public function attachment()
+{
+    return $this->hasMany('App\Models\Attachment');
+}
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'email',
         'password',
     ];
