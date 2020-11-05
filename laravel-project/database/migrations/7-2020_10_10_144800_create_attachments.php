@@ -15,12 +15,14 @@ class CreateAttachments extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->binary('file');
             $table->string('filename');
             $table->float('size');
-            $table->binary('blob');
-            $table-> foreignId('user_id')->constrained('users');
-            $table->foreignId('task_id')->constrained('tasks');
+            $table->string('type');
+            $table-> foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('task_id')->constrained('tasks')->onDelete('cascade');
+            $table->timestamps();
+            $table->engine = 'InnoDB';
 
         });
     }

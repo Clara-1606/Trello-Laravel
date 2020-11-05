@@ -10,9 +10,9 @@ class Category extends Model
     use HasFactory;
     public $timestamps =false;
     public $fillable=["name"];
-    protected $table = 'category';
+    protected $table = 'categories';
 
-    public function task()
+    public function tasks()
 {
     return $this->hasMany('App\Models\Task');
 }

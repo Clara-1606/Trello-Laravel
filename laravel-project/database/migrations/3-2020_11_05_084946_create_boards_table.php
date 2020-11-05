@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComments extends Migration
+class CreateBoardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateComments extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('boards', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
-            $table -> longText('text');
+            $table->string('title');
+            $table->text('description');
+            $table -> foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
-            $table -> foreignId('user_id')->constrained('users');
-            $table -> foreignId('task_id')->constrained('tasks');
+            
         });
     }
 
@@ -29,6 +31,6 @@ class CreateComments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('boards');
     }
 }
