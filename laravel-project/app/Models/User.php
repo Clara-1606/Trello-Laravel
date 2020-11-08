@@ -15,23 +15,43 @@ class User extends Authenticatable
     protected $table = 'users';
 
     
-public function tasks()
+public function task()
 {
     return $this->belongsToMany('App\Models\Task');
 }
 
-public function task()
+public function tasks()
 {
     return $this->hasMany('App\Models\Task');
 }
 
-public function comment()
+public function comments()
 {
     return $this->hasMany('App\Models\Comment');
 }
-public function attachment()
+public function attachments()
 {
     return $this->hasMany('App\Models\Attachment');
+}
+
+public function ownedBoards(){
+    return $this->hasMany('App\Models\Board');
+}
+
+public function board(){
+    return $this->belongsToMany('App\Models\Board');
+}
+
+public function boards(){
+    return $this->belongsToMany('App\Models\Board');
+}
+
+public function assignedTasks(){
+    return $this->belongsToMany('App\Models\Task');
+}
+
+public function allTasks(){
+    return $this->belongsTo('App\Models\Task');
 }
 
     /**

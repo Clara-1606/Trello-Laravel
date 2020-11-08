@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Model\Category;
+use App\Models\Category;
 
 class Task extends Model
 {
@@ -15,30 +15,29 @@ class Task extends Model
 
    
 
-public function users()
+public function user()
 {
     return $this->belongsToMany('App\Models\User','participant')
-                ->using('App\Models\Participant')
-                ->withPivot("owner","assigned");
+                ->using('App\Models\TaskUser');
 }
 
-public function participants()
+public function taskUser()
 {
-    return $this->hasMany('App\Models\Participant');
+    return $this->hasMany('App\Models\TaskUser');
 }
 
 
-public function user()
+public function users()
 {
     return $this->belongsTo('App\Models\User');
 }
 
-public function attachment()
+public function attachments()
 {
     return $this->hasMany('App\Models\Attachment');
 }
 
-public function comment()
+public function comments()
 {
     return $this->hasMany('App\Models\Comment');
 }
@@ -49,9 +48,18 @@ public function category()
 }
 
 public function assignedUsers(){
-    return $this->belongsToMany("App\Models\User",'participant')
-                ->using('App\Models\Participant')
-                ->wherePivot("assigned", "=", true)
-                ->withPivot('owner','assigned');
+    return $this->belongsToMany("App\Models\User")
+                ->using('App\Models\TaskUser')
+                // ->wherePivot("assigned", "=", true)
+                // ->withPivot('owner','assigned')
+                ;
+}
+
+public function board(){
+    return $this->belongsTo("App\Models\Board");
+}
+
+public function participants() {
+    return $this->hasManyThrough("App\Models\Board", "App\Models\User");
 }
 }
