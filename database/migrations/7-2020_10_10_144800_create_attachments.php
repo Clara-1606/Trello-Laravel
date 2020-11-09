@@ -17,7 +17,7 @@ class CreateAttachments extends Migration
             $table->id();
             $table->binary('file');
             $table->string('filename');
-            $table->float('size');
+            $table->double('size');
             $table->string('type');
             $table-> foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('task_id')->constrained('tasks')->onDelete('cascade');

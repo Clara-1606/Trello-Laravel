@@ -14,5 +14,11 @@ class TaskUser extends Pivot
     public $fillable=["assigned",'user_id','task_id'];
     protected $table = 'task_user';
 
-    
+    public function user (){
+        return $this ->belongsTo("App\Models\User");
+    }
+
+    public function task (){
+        return $this ->belongsTo("App\Models\Task");
+    }
 }
