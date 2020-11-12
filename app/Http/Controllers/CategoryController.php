@@ -46,8 +46,6 @@ class CategoryController extends Controller
         ]);
         $category=new Category();
         $category->name = $validateData["name"];
-        $category->created_at=now();
-        $category->updated_at=now();
         $category->save();
         return redirect('/categories');
     }
@@ -61,7 +59,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
-        return view('category.show', ['name'=>$category->name]);
+        return view('category.show', compact('category'));
     }
 
     /**
@@ -89,7 +87,7 @@ class CategoryController extends Controller
         $validateData= $request->validate([
             'name'=>'required|min:6|unique:categories',
         ]);
-        $category->update(['name'=>$validateData["name"],"updated_at"=>now()]);
+        $category->update(['name'=>$validateData["name"]]);
         return redirect('/categories');
     }
 
