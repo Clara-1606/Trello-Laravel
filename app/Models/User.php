@@ -72,7 +72,7 @@ public function assignedTasks(){
  * Obtient toutes les tâches
  */
 public function allTasks(){
-    return $this->belongsTo('App\Models\Task');
+    return $this->HasManyThrough('App\Models\Task','App\Models\Board');
 }
 
     /**

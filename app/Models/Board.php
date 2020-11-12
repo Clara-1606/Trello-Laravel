@@ -32,13 +32,6 @@ class Board extends Model
     }
 
     /**
-     * Les utilisateurs appartiennent au board
-     */
-    public function users(){
-        return $this->belongsToMany('App\Models\User');
-    }
-
-    /**
      * Obtenez les tâches du board
      */
     public function tasks()
@@ -52,5 +45,13 @@ class Board extends Model
 public function owner()
 {
     return $this->belongsTo('App\Models\User');
+}
+
+public function users(){
+    return $this->belongsToMany("App\Models\User")
+                ->using('App\Models\BoardUser')
+                // ->wherePivot("assigned", "=", true)
+                // ->withPivot('owner','assigned')
+                ;
 }
 }

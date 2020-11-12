@@ -96,6 +96,6 @@ public function board(){
  * 
  */
 public function participants() {
-    return $this->hasManyThrough("App\Models\Board", "App\Models\User");
+    return $this->hasManyThrough("App\Models\User", "App\Models\Board");
 }
 }

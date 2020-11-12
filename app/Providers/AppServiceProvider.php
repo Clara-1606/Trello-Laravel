@@ -25,11 +25,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        if (env("APP_DEBUG"))
-        {
-        DB::listen(function ($query) {
-        echo("DB: " . $query->sql . "[". implode(",",$query->bindings). "]\n");
-        });
-        }
+        // if (env("APP_DEBUG"))
+        // {
+        // DB::listen(function ($query) {
+        // echo("DB: " . $query->sql . "[". implode(",",$query->bindings). "]\n");
+        // });
+        // }
     }
 }
