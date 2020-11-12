@@ -11,47 +11,68 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    public $timestamps =false;
+    
     protected $table = 'users';
 
-    
+ 
+    /**
+     * Obtient la tâche de l'utilisateur
+     */
 public function task()
 {
     return $this->belongsToMany('App\Models\Task');
 }
 
+/**
+ * Obtient les tâches de l'utilisateur
+ */
 public function tasks()
 {
     return $this->hasMany('App\Models\Task');
 }
 
+/**
+ * Obtient les commentaires de l'utilisateur
+ */
 public function comments()
 {
     return $this->hasMany('App\Models\Comment');
 }
+
+/**
+ * Obtient les fichiers de l'utilisateur
+ */
 public function attachments()
 {
     return $this->hasMany('App\Models\Attachment');
 }
 
+/**
+ * Obtient les boards
+ */
 public function ownedBoards(){
     return $this->hasMany('App\Models\Board');
 }
 
-public function board(){
-    return $this->belongsToMany('App\Models\Board');
-}
-
+/**
+ * Obtient les boards
+ */
 public function boards(){
     return $this->belongsToMany('App\Models\Board');
 }
 
+/**
+ * Obtient les tâches assignées
+ */
 public function assignedTasks(){
     return $this->belongsToMany('App\Models\Task');
 }
 
+/**
+ * Obtient toutes les tâches
+ */
 public function allTasks(){
-    return $this->belongsTo('App\Models\Task');
+    return $this->HasManyThrough('App\Models\Task','App\Models\Board');
 }
 
     /**
@@ -60,8 +81,7 @@ public function allTasks(){
      * @var array
      */
     protected $fillable = [
-        'firstname',
-        'lastname',
+        'name',
         'email',
         'password',
     ];
