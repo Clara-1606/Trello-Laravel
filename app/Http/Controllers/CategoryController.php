@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+
 
 class CategoryController extends Controller
 {
@@ -44,8 +46,10 @@ class CategoryController extends Controller
         ]);
         $category=new Category();
         $category->name = $validateData["name"];
+        $category->created_at=now();
+        $category->updated_at=now();
         $category->save();
-        return $category;
+        return redirect('/categories');
     }
 
     /**
@@ -57,7 +61,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
-        return view('category.show', ['cat'=>$category]);
+        return view('category.show', ['name'=>$category->name]);
     }
 
     /**
@@ -69,6 +73,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
+        return view('category.edit',compact('category'));
     }
 
     /**
@@ -81,6 +86,11 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        $validateData= $request->validate([
+            'name'=>'required|min:6|unique:categories',
+        ]);
+        $category->update(['name'=>$validateData["name"],"updated_at"=>now()]);
+        return redirect('/categories');
     }
 
     /**
@@ -92,5 +102,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        $category->delete();
+        return redirect('/categories');
     }
 }
