@@ -6,74 +6,97 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
+
+/**
+ * Le modèle User qui est lié à la table users dans la base de données
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    //use HasProfilePhoto;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
-    
-    protected $table = 'users';
+/* Relations Eloquent */
 
- 
     /**
-     * Obtient la tâche de l'utilisateur
+     * Renvoi la liste des boards appartenant à l'utilisateur 
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMAny
      */
-public function task()
-{
-    return $this->belongsToMany('App\Models\Task');
-}
+    public function ownedBoards()
+    {
+        return $this->hasMany(Board::class);
+    }
 
-/**
- * Obtient les tâches de l'utilisateur
- */
-public function tasks()
-{
-    return $this->hasMany('App\Models\Task');
-}
+    /**
+     * Renvoi la liste des boards auxquel l'utilisateur participe
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function boards()
+    {
+        return $this->belongsToMany(Board::class)
+                    ->using(BoardUser::class)
+                    ->withPivot("id")
+                    ->withTimestamps()
+                    ;
+    }
 
-/**
- * Obtient les commentaires de l'utilisateur
- */
-public function comments()
-{
-    return $this->hasMany('App\Models\Comment');
-}
+    /**
+     * Renvoi la liste des toutes les tâches des boards auxquel l'utilisateur participe
+     * (hormis celles du board dont il est le propriétaire! )
+     * //TODO : test
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function allTasks() {
+        return $this->hasManyThrough(Task::class, BoardUser::class, 'user_id', 'board_id', 'id', 'board_id');
+    }
 
-/**
- * Obtient les fichiers de l'utilisateur
- */
-public function attachments()
-{
-    return $this->hasMany('App\Models\Attachment');
-}
 
-/**
- * Obtient les boards
- */
-public function ownedBoards(){
-    return $this->hasMany('App\Models\Board');
-}
+    /**
+     * Renvoi la liste des tâches assignées à l'utilisateur
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function assignedTasks()
+    {
+        return $this->belongsToMany('App\Models\Task')
+                    ->using("App\Models\TaskUser")
+                    ->withPivot("id")
+                    ->withTimestamps();
+    }
 
-/**
- * Obtient les boards
- */
-public function boards(){
-    return $this->belongsToMany('App\Models\Board');
-}
 
-/**
- * Obtient les tâches assignées
- */
-public function assignedTasks(){
-    return $this->belongsToMany('App\Models\Task');
-}
+    /**
+     * Renvoi la liste des commentaires rédigés par l'utilisateur
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 
-/**
- * Obtient toutes les tâches
- */
-public function allTasks(){
-    return $this->HasManyThrough('App\Models\Task','App\Models\Board');
-}
+    /**
+     * Renvoi la liste des pièces jointes posées par l'utilisateur
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachments()
+    {
+        return $this->hasMany('App\Models\Attachment');
+    }
+
+
 
     /**
      * The attributes that are mass assignable.
@@ -94,6 +117,8 @@ public function allTasks(){
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
@@ -103,5 +128,14 @@ public function allTasks(){
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        //'profile_photo_url',
     ];
 }

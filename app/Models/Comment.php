@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Le modèle Comment qui est lié à la table comments dans la base de données
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class Comment extends Model
 {
     use HasFactory;
@@ -25,18 +32,23 @@ class Comment extends Model
 
 
     /**
-     * Obtient l'utilisateur qui a écrit le commentaire
+     * Renvoi l'utilisateur qui a écrit le commentaire
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
-{
-    return $this->belongsTo('App\Models\User');
-}
+    {
+        return $this->belongsTo(User::class);
+    }
 
-/**
- * Obtient la tâche qui à été commentée
- */
-public function task()
-{
-    return $this->belongsTo('App\Models\Task');
-}
+
+    /**
+     * Renvoi la tâche à laquelle est associé le commentaire
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function task()
+    {
+        return $this->belongsTo('App\Models\Task');
+    }
 }

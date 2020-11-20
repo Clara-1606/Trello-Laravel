@@ -5,6 +5,13 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use phpDocumentor\Reflection\Types\Nullable;
 
+/**
+ * Migration dans la base de données de la table tasks
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class CreateTasks extends Migration
 {
     /**

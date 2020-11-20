@@ -6,6 +6,12 @@ use App\Models\Category;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
+/**
+ * Controller pour le CRUD Category
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
 
 class CategoryController extends Controller
 {

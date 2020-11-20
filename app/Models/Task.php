@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 
+/**
+ * Le modèle Task qui est lié à la table tasks dans la base de données
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class Task extends Model
 {
     use HasFactory;
@@ -26,76 +33,74 @@ class Task extends Model
 
    
 /**
- * 
- */
-public function user()
-{
-    return $this->belongsToMany('App\Models\User','participant')
-                ->using('App\Models\TaskUser');
-}
+     * Renvoie la catégorie de la tâche
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
+    }
 
-/**
- * 
- */
-public function taskUser()
-{
-    return $this->hasMany('App\Models\TaskUser');
-}
 
-/**
- * Obtient les utilisateurs de la tâche
- */
-public function users()
-{
-    return $this->belongsTo('App\Models\User');
-}
+    /**
+     * Renvoie le board qui contient la tâche
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function board()
+    {
+        return $this->belongsTo('App\Models\Board');
+    } 
 
-/**
- * Obtient les attachments de la tâche
- */
-public function attachments()
-{
-    return $this->hasMany('App\Models\Attachment');
-}
 
-/**
- * Obtient les commentaires de la tâche
- */
-public function comments()
-{
-    return $this->hasMany('App\Models\Comment');
-}
+    /**
+     * Renvoie tous les utilisateurs qui sont assignés à la tâche
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function assignedUsers()
+    {
+        return $this->belongsToMany('App\Models\User')
+                    ->using("App\Models\TaskUser")
+                    ->withPivot("id")
+                    ->withTimestamps();
+    }
 
-/**
- * Obtient la catégory de la tâche
- */
-public function category()
-{
-    return $this->belongsTo(Category::class);
-}
+    
 
-/**
- * Obtient les utilisateurs assignés à la tâche
- */
-public function assignedUsers(){
-    return $this->belongsToMany("App\Models\User")
-                ->using('App\Models\TaskUser')
-                // ->wherePivot("assigned", "=", true)
-                // ->withPivot('owner','assigned')
-                ;
-}
+    /**
+     * Renvoie la liste des utilisateurs du board auquel appartient la tâche (hormis le propriétaire ?)
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\hasManyThrough
+     */
+    public function participants()
+    {
+        return $this->hasManyThrough(User::class, BoardUser::class, "board_id", 'id', 'board_id', 'user_id');    
+        //1 board user
+        //2 clé étrangère dans User sauf qu'il y en a pas
+        //3 reference dans task
+        //4 board user
+    }
 
-/**
- * Obtient le board où il y a la tâche
- */
-public function board(){
-    return $this->belongsTo("App\Models\Board");
-}
+    /**
+     * Renvoie la liste des commentaires associés à la tâche
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 
-/**
- * 
- */
-public function participants() {
-    return $this->hasManyThrough("App\Models\User", "App\Models\Board");
-}
+    /**
+     * Renvoie la liste des pièces jointes associées à la tâche
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachments() 
+    {
+        return $this->hasMany('App\Models\Attachment');
+    }
+    
 }

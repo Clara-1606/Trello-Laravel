@@ -30,3 +30,6 @@ Route::get('/', function () {
 // Route::post('categories/',[CategoryController::class, 'store'])->name('categories.store');
 
 Route::resource('categories', CategoryController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
