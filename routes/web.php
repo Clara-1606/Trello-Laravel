@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BoardController;
+use App\Http\Controllers\BoardUserController;
+use App\Http\Controllers\TaskController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
@@ -23,13 +26,29 @@ Route::get('/', function () {
 //     return "connection";
 // })-> name('login');
 
-// Route::get('categories',[CategoryController::class, 'index'])->name('categories.name');
-// Route::get('categories/create',[CategoryController::class, 'create'])->name('categories.create');
-// Route::get('categories/{category}',[CategoryController::class, 'show']);
 
-// Route::post('categories/',[CategoryController::class, 'store'])->name('categories.store');
+Route::resource('categories', CategoryController::class)->middleware('auth');
 
-Route::resource('categories', CategoryController::class);
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
+// Route::get('boards',[BoardController::class, 'index'])->middleware('auth')->name('boards.index');
+// Route::get('boards/create',[BoardController::class, 'create'])->middleware('auth')->name('boards.create');
+// Route::post('boards/',[BoardController::class, 'store'])->middleware('auth')->name('boards.store');
+// Route::get('boards/{board}',[BoardController::class, 'show'])->middleware('auth')->name('boards.show');
+// Route::get('boards/{board}/edit',[BoardController::class, 'edit'])->middleware('auth')->name('boards.edit');
+// Route::put('boards/{board}',[BoardController::class, 'update'])->middleware('auth')->name('boards.update');
+// Route::delete('boards/{board}',[BoardController::class, 'destroy'])->middleware('auth')->name('boards.destroy');
+
+Route::resource('boards', BoardController::class)->middleware('auth');
+
+Route::get('boards/{board}/boardUser/create',[BoardUserController::class, 'create'])->middleware('auth')->name('boards.boardUser.create');
+Route::post('boards/{board}/boardUser',[BoardUserController::class, 'store'])->middleware('auth')->name('boards.boardUser.store');
+Route::delete('boardUser/{boardUser}',[BoardUserController::class, 'destroy'])->middleware('auth')->name('boardUser.destroy');
+
+Route::get('boards/{board}/tasks/create',[TaskController::class, 'create'])->middleware('auth')->name('boards.tasks.create');
+Route::post('boards/{board}/tasks',[TaskController::class, 'store'])->middleware('auth')->name('boards.tasks.store');
+Route::delete('tasks/{task}',[TaskController::class, 'destroy'])->middleware('auth')->name('tasks.destroy');

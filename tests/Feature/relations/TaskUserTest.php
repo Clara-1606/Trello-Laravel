@@ -51,4 +51,26 @@ class TaskUserTest extends TestCase
 
     }
 
+    /**
+     * On ne peut pas assigner une tâche à un utilisateur si cet utilisateur ne participe pas au board auquel appartient la tâche
+     *
+     * @return void
+     */
+    public function testTaskIsNotAssignedToUserWhoDoesNotBelongToSameBoard() {
+        
+        $task = Task::factory()->create();
+        $user = User::factory()->create(); 
+        
+        $task_user = new TaskUser(); 
+        $task_user->user_id =  $user->id; 
+        $task_user->task_id = $task->id; 
+        $task_user->save();
+
+        //On vérifie dans la base que l'assignation de l'utilisateur à la tâche  n'est pas enregistré
+        $this->assertDatabaseMissing('task_user', $task_user->attributesToArray());
+
+       
+    }
+
+
 }

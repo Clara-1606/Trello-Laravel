@@ -71,6 +71,11 @@ class Board extends Model
                     ->withTimestamps();
     }
 
+
+    /**
+     * Renvoie tous les tâches qui sont asssociés au board
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function tasks() {
         return $this->hasMany(Task::class);
     }

@@ -17,6 +17,15 @@ class Task extends Model
 {
     use HasFactory;
     
+ /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'due_date' => 'datetime',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -15,6 +15,21 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class TaskUser extends Pivot
 {
     use HasFactory;
+
+    /**
+     * The "booted" method of the model.
+     * Si
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        //Si la fonction renvoie faux, la création ne se fait pas, sinon elle le fait
+        static::creating(function ($task_user) {
+            return $task_user->task->board->users->find($task_user->user_id)!==null;
+        });
+    }
+
      /**
      * Indicates if the IDs are auto-incrementing.
      *
