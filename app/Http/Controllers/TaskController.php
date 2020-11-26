@@ -66,7 +66,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('user.tasks.show', compact('task'));
     }
 
     /**
@@ -77,7 +77,8 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $categories= Category::all();
+        return view('user.tasks.edit',['categories'=>$categories, 'task'=>$task]);
     }
 
     /**
@@ -90,6 +91,22 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
+        $validateData= $request->validate([
+            'title'=>'required|min:6|max:255',
+            'description'=>'required|min:6',
+            'due_date' => 'required',
+            'category'=>'required',
+            'state'=>'required',
+        ]);
+
+        $task->title = $validateData["title"];
+        $task->description = $validateData["description"];
+        $task->due_date = $validateData["due_date"];
+        $task->state = $validateData["state"];
+        $task->update();
+
+        $board=$task->board;
+        return redirect()->route('boards.show', ['board' => $board]);
     }
 
     /**
@@ -101,5 +118,9 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+        $task->delete();
+        //relation model
+        $board=$task->board;
+        return redirect()->route('boards.show', ['board' => $board]);
     }
 }

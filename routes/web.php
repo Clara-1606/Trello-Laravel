@@ -50,5 +50,8 @@ Route::post('boards/{board}/boardUser',[BoardUserController::class, 'store'])->m
 Route::delete('boardUser/{boardUser}',[BoardUserController::class, 'destroy'])->middleware('auth')->name('boardUser.destroy');
 
 Route::get('boards/{board}/tasks/create',[TaskController::class, 'create'])->middleware('auth')->name('boards.tasks.create');
-Route::post('boards/{board}/tasks',[TaskController::class, 'store'])->middleware('auth')->name('boards.tasks.store');
+Route::post('boards/{board}/task',[TaskController::class, 'store'])->middleware('auth')->name('boards.tasks.store');
+Route::get('tasks/{task}',[TaskController::class, 'show'])->middleware('auth')->name('tasks.show');
+Route::get('tasks/{task}/edit',[TaskController::class, 'edit'])->middleware('auth')->name('tasks.edit');
+Route::put('tasks/{task}',[TaskController::class, 'update'])->middleware('auth')->name('tasks.update');
 Route::delete('tasks/{task}',[TaskController::class, 'destroy'])->middleware('auth')->name('tasks.destroy');

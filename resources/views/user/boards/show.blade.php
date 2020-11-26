@@ -19,7 +19,6 @@
     <tr>
      <td>{{$user->id}}</td>
     <td>{{$user->name}}</td>
-    <td>{{$user->pivot->id}}</td>
     <td> <form action="{{route('boardUser.destroy',$user->pivot)}}" method="post">
         @csrf
         @method('DELETE')
@@ -48,10 +47,12 @@
     @foreach($board->tasks as $task)
     <tr>
         <td>{{$task->id}}</td>
-       <td>{{$task->name}}</td>
+       <td>{{$task->title}}</td>
        <td>{{$task->description}}</td>
        <td>{{$task->due_date}}</td>
        <td>{{$task->id}}</td>
+       <td> <a class="btn btn-info" href="{{route('tasks.show',$task->id)}}"> Voir</a></td>
+        <td> <a class="btn btn-success" href="{{route('tasks.edit',$task->id)}}"> Modifer</a></td>
        <td> <form action="{{route('tasks.destroy',$task->id)}}" method="post">
            @csrf
            @method('DELETE')

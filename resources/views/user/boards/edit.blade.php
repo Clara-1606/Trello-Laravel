@@ -11,7 +11,7 @@
     <input type="text" id="title" name="title" value={{$board->title}} class=@error('title') is-invalid @enderror>
     </div>
     <label for='description'> Description board</label>
-    <input type="textarea" id="description" name="description" class=@error('description') is-invalid @enderror>
+    <input type="textarea" id="description" name="description" value={{$board->description}} class=@error('description') is-invalid @enderror>
 
     @error('description')
     <div class="alert alert-danger"> {{$message}} </div>

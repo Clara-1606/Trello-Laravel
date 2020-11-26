@@ -3,15 +3,18 @@
 @section('title', 'Add Tasks')
 
 @section ('content')
-<form method="POST" action={{route('boards.tasks.store',$board->id)}}>
+<form method="POST" action={{route('tasks.update',$task->id)}}>
     @csrf
+    @method('PUT')
+    
     <div class="form-group">
         <label for='title'> Title</label>
-    <input type="text" id="title" name="title" class=@error('title') is-invalid @enderror>
+    <input value={{$task->title}} type="text" id="title" name="title" class=@error('title') is-invalid @enderror>
     </div>
     <div class="form-group">
     <label for='description'> Description</label>
-    <input type="textarea" id="description" name="description" class=@error('description') is-invalid @enderror>
+    <input
+    value={{$task->description}} type="textarea" id="description" name="description" class=@error('description') is-invalid @enderror>
     </div>
     <div class="form-group">
     <label for='due_date'> due_date</label>
