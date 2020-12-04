@@ -27,7 +27,7 @@ class CreateTasks extends Migration
             $table ->string('title');
             $table -> text('description');
             $table -> date('due_date');
-            $table->enum('state', ['todo', 'ongoing','done']);
+            $table->enum('state', ['todo', 'ongoing','done'])->default('todo');;
             $table -> foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table -> foreignId('board_id')->constrained('boards')->onDelete('cascade');
             $table->timestamps();

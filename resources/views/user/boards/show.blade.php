@@ -59,6 +59,7 @@
            <button class="btn btn-danger" type="submit"> Supprimer </button> 
        </td>
        </tr>
+    </form>
        @endforeach
 </table>
 <a class="btn btn-primary" href="{{route('boards.tasks.create',$board->id)}}"> Ajouter une tâche</a>

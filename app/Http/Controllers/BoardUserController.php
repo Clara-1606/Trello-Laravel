@@ -27,8 +27,12 @@ class BoardUserController extends Controller
     public function create(Board $board)
     {
         //
-        $users = User::all();
-        return view('user.boardUser.create',['users'=>$users, 'board'=>$board]);
+        // On récupère les ids des utilisateurs de la board : 
+        $boardUsersIds = $board->users->pluck('id'); 
+        // on récupère ici tous les utilisateurs qui ne sont pas dans la board. 
+        // Notez le get, qui permet d'obtenir la collection (si on ne le met pas, on obtient un query builder mais la requête n'est pas executée)
+        $usersNotInBoard  = User::whereNotIn('id', $boardUsersIds)->get();
+        return view('user.boardUser.create',['users'=>$usersNotInBoard, 'board'=>$board]);
     }
 
     /**
@@ -41,13 +45,14 @@ class BoardUserController extends Controller
     {
         //
         $validateData= $request->validate([
-            'user'=>'required',
+            'user'=>'required|integer|exists:users,id',
         ]);
         $boardUser= new BoardUser();
         $boardUser->user_id = $validateData["user"];
         $boardUser->board_id = $board->id;
         $boardUser->save();
         return view ('user.boards.show', compact('board'));
+        //return redirect()->route('boards.show', $board);
     }
 
     /**

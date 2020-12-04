@@ -42,8 +42,8 @@ class TaskController extends Controller
         $validateData= $request->validate([
             'title'=>'required|min:6|max:255',
             'description'=>'required|min:6',
-            'due_date' => 'required',
-            'category'=>'required',
+            'due_date' => 'required|date|after_or_equal:tomorrow',
+            'category'=>'required|exists:categories,id',
             'state'=>'required',
         ]);
 
@@ -54,6 +54,8 @@ class TaskController extends Controller
         $task->state = $validateData["state"];
         $task->board_id = $board->id;
         $task->save();
+        //On peut tout faire en une ligne
+        //Task::create($validateData)
         return view ('user.boards.show', compact('board'));
     
     }
