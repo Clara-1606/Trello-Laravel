@@ -21,7 +21,7 @@ class TaskController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     *  @param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
     public function create(Board $board)
@@ -35,6 +35,7 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Board $board)
@@ -44,7 +45,7 @@ class TaskController extends Controller
             'description'=>'required|min:6',
             'due_date' => 'required|date|after_or_equal:tomorrow',
             'category'=>'required|exists:categories,id',
-            'state'=>'required',
+            'state'=>'required|in:todo,ongoing,done',
         ]);
 
         $task= new Task();
@@ -98,7 +99,7 @@ class TaskController extends Controller
             'description'=>'required|min:6',
             'due_date' => 'required',
             'category'=>'required',
-            'state'=>'required',
+            'state'=>'required|in:todo,ongoing,done',
         ]);
 
         $task->title = $validateData["title"];

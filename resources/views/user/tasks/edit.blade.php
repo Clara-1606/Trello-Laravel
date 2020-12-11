@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
     <label for='due_date'> due_date</label>
-    <input type="date" id="due_date" name="due_date" class=@error('due_date') is-invalid @enderror>
+    <input value={{$task->due_date}} type="date" id="due_date" name="due_date" class=@error('due_date') is-invalid @enderror>
     </div>
     <div class="form-group">
     <label for='categorie'> Catégorie </label>

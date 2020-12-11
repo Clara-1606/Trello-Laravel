@@ -3,12 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Board;
-use App\Models\BoardUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
 {
+     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+         /*
+         * Cette fonction gre directement les autorisations pour chacune des méthodes du contrôleur 
+         * en fonction des méthode du BoardPolicy (viewAny, view, update, create, ...)
+         * 
+         *  https://laravel.com/docs/8.x/authorization#authorizing-resource-controllers
+         */
+        $this->authorizeResource(Board::class, 'board');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -32,6 +48,8 @@ class BoardController extends Controller
      */
     public function create()
     {
+        //$this->authorize('create', Board::class);
+
         //renvoi le formulaire de création d'un board
         return view('user.boards.create');
     }
@@ -44,7 +62,8 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$this->authorize('create', Board::class);
+
         $validateData= $request->validate([
             'title'=>'required|min:6|max:255',
             'description'=>'required|min:6',
@@ -65,7 +84,10 @@ class BoardController extends Controller
      */
     public function show(Board $board )
     {
-        //
+        //Pour que l'on puisse voir que nos boards et pas ceux des autres
+        // Voir BoardPolicy view
+        //$this->authorize('view', $board);
+
         return view("user.boards.show", ["board" => $board]);
     }
 

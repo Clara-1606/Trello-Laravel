@@ -33,7 +33,7 @@ class TaskUserController extends Controller
          $taskUsersIds = $board->users->pluck('id'); 
          // on récupère ici tous les utilisateurs qui ne sont pas dans la task. 
          // Notez le get, qui permet d'obtenir la collection (si on ne le met pas, on obtient un query builder mais la requête n'est pas executée)
-         $usersNotIntask  = User::where('id', $taskUsersIds)->get();
+         $usersNotIntask  = User::whereIn('id', $taskUsersIds)->get();
          return view('user.taskUser.create',['users'=>$usersNotIntask, 'task'=>$task]);
     }
 

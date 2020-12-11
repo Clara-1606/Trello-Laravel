@@ -62,10 +62,10 @@ Route::get('tasks/{task}/taskUser/create',[TaskUserController::class, 'create'])
 Route::post('tasks/{task}/taskUser',[TaskUserController::class, 'store'])->middleware('auth')->name('tasks.taskUser.store');
 Route::delete('taskUser/{taskUser}',[TaskUserController::class, 'destroy'])->middleware('auth')->name('taskUser.destroy');
 
-Route::post('task/{task}/comments',[CommentController::class, 'store'])->middleware('auth')->name('tasks.comments.store');
+Route::post('tasks/{task}/comments',[CommentController::class, 'store'])->middleware('auth')->name('tasks.comments.store');
 Route::put('comments/{comment}',[CommentController::class, 'update'])->middleware('auth')->name('tasks.comments.update');
 Route::delete('comments/{comment}',[CommentController::class, 'destroy'])->middleware('auth')->name('comments.destroy');
 
-Route::post('task/{task}/attachments',[AttachmentController::class, 'store'])->middleware('auth')->name('tasks.attachments.store');
+Route::post('tasks/{task}/attachments',[AttachmentController::class, 'store'])->middleware('auth')->name('tasks.attachments.store');
 Route::put('attachments/{attachment}',[AttachmentController::class, 'update'])->middleware('auth')->name('tasks.attachments.update');
 Route::delete('attachments/{attachment}',[AttachmentController::class, 'destroy'])->middleware('auth')->name('attachments.destroy');

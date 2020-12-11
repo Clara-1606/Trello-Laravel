@@ -17,13 +17,17 @@
         <td>{{$board->title}}</td>
         <td>{{$board->description}}</td>
         <td> <a class="btn btn-info" href="{{route('boards.show',$board->id)}}"> Voir</a></td>
+        @can('update',$board)
         <td> <a class="btn btn-success" href="{{route('boards.edit',$board->id)}}"> Modifer</a></td>
+        @endcan
+        @can('delete',$board)
         <td> <form action="{{route('boards.destroy',$board->id)}}" method="post">
         @csrf
         @method('DELETE')
         <button class="btn btn-danger" type="submit"> Supprimer </button> 
         </form>
         </td>
+        @endcan
     </tr>
 @endforeach
 </table>

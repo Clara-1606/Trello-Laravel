@@ -21,7 +21,7 @@ class BoardUserController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     *@param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
     public function create(Board $board)
@@ -39,6 +39,7 @@ class BoardUserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Board $board)
