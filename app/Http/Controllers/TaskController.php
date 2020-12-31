@@ -7,6 +7,13 @@ use App\Models\Category;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
+/**
+ * Controleur pour le CRUD Task
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class TaskController extends Controller
 {
     /**

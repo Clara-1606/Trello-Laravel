@@ -58,4 +58,14 @@
         </ul>
     </div>
 @endif
+
+<br/>
+<br/>
+<a class="btn btn-primary" href="{{route('categories.create')}}"> Ajouter une catégorie</a>
+<br/>
+<br/>
+
+<div class="row">
+    <a class="btn btn-primary m-auto" href="{{route('boards.show',$board->id)}}"> Retour </a>
+    </div>
 @endsection

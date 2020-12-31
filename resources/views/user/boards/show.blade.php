@@ -1,11 +1,17 @@
+
 @extends('layouts.main')
 
 @section('title', "Les boards {{$board->title}}")
 
 @section ('content')
 
-<h2>{{$board->title}}</h2>
-<p>{{$board->description}}</p>
+<div class="row align-items-center">
+<div class="m-auto">
+<h2 class="h2">{{$board->title}}</h2>
+<br/>
+<p class="">{{$board->description}}</p>
+</div>
+</div>
 <br/>
 <br/>
 <h3>Participants :</h3>
@@ -63,3 +69,11 @@
        @endforeach
 </table>
 <a class="btn btn-primary" href="{{route('boards.tasks.create',$board->id)}}"> Ajouter une tâche</a>
+
+<br/><br/>
+
+<div class="row">
+    <a class="btn btn-primary m-auto" href="{{route('boards.index')}}"> Retour </a>
+    </div>
+
+@endsection

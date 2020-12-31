@@ -61,4 +61,9 @@
         </ul>
     </div>
 @endif
+
+<div class="row">
+    <a class="btn btn-primary m-auto" href="{{route('boards.show',$task->board->id)}}"> Retour </a>
+    </div>
+
 @endsection

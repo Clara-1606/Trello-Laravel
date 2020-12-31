@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Attachment;
 use Illuminate\Http\Request;
 
+/**
+ * Controller pour le CRUD Attachments
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class AttachmentController extends Controller
 {
     /**

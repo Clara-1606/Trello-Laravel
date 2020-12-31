@@ -8,6 +8,13 @@ use App\Models\User;
 use App\Models\Board;
 use Illuminate\Http\Request;
 
+/**
+ * Controleur pour le CRUD Task User
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class TaskUserController extends Controller
 {
     /**

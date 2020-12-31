@@ -18,7 +18,7 @@ class TaskUser extends Pivot
 
     /**
      * The "booted" method of the model.
-     * Si
+     *
      *
      * @return void
      */

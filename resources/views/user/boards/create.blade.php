@@ -21,4 +21,8 @@
     <button type="submit"> Sauvegarder </button>
 
 </form>
+
+<div class="row">
+    <a class="btn btn-primary m-auto" href="{{route('boards.index')}}"> Retour </a>
+    </div>
 @endsection

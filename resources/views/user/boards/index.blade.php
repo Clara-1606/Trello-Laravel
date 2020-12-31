@@ -4,6 +4,7 @@
 
 @section ('content')
 
+
 <table class="table">
 <tr>
     <td>ID</td>
@@ -33,5 +34,12 @@
 </table>
 
 <a class="btn btn-primary" href="{{route('boards.create')}}"> Ajouter un board</a>
+
+<br/>
+<br/>
+
+<div class="row">
+    <a class="btn btn-primary m-auto" href="{{route('welcome')}}"> Retour </a>
+    </div>
 
 @endsection

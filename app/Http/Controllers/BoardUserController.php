@@ -7,8 +7,31 @@ use App\Models\BoardUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+/**
+ * Controller pour le CRUD Board User
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class BoardUserController extends Controller
 {
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    // public function __construct()
+    // {
+    //      /*
+    //      * Cette fonction gre directement les autorisations pour chacune des méthodes du contrôleur 
+    //      * en fonction des méthode du BoardPolicy (viewAny, view, update, create, ...)
+    //      * 
+    //      *  https://laravel.com/docs/8.x/authorization#authorizing-resource-controllers
+    //      */
+    //     $this->authorizeResource(BoardUser::class, 'boardUser');
+    // }
     /**
      * Display a listing of the resource.
      *

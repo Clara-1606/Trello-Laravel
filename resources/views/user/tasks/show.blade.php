@@ -8,6 +8,7 @@
 <p>{{$task->description}}</p>
 <p>Due Date : {{$task->due_date}}</p>
 <p>State : {{$task->state}}</p>
+<p> Catégorie : {{$task->categorie}}</p>
 <br/>
 <p>Créer le : {{$task->created_at}}</p>
 <p> Modifié le : {{$task->updated_at}}</p>
@@ -52,6 +53,7 @@
      <td>{{$comment->user->name}}</td>
     <td>{{$comment->text}}</td>
     <td>{{$comment->updated_at}}</td>
+    @can('update',$comment)
     <td> <form action="{{route('tasks.comments.update', $comment)}}" method="POST">
         @csrf
         @method('PUT')
@@ -61,12 +63,15 @@
         @enderror
         <button class="btn btn-success" type="submit">Modifier</button>
     </form></td>
+    @endcan
+    @can('delete',$comment)
     <td> <form action="{{route('comments.destroy',$comment->id)}}" method="post">
         @csrf
         @method('DELETE')
         <button class="btn btn-danger" type="submit"> Supprimer </button> 
     </form>
     </td>
+    @endcan
     </tr>
     @endforeach
 
@@ -115,3 +120,11 @@
     @enderror
     <button class="btn btn-primary" type="submit">Ajouter</button>
 </form>
+
+<br/>
+
+<div class="row">
+    <a class="btn btn-primary m-auto" href="{{route('boards.show',$task->board->id)}}"> Retour </a>
+    </div>
+
+@endsection

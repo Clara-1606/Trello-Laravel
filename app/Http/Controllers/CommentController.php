@@ -7,28 +7,16 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controleur pour le CRUD Comment
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -82,7 +70,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        //$this->authorize('udpate', Comment::class);
         $validateData= $request->validate([
             'text'=>'required|min:6|max:4000',
         ]);
@@ -101,7 +89,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        //$this->authorize('delete', Comment::class);
         $comment->delete();
         $task=$comment->task;
         return redirect()->route('tasks.show', ['task' => $task]);
