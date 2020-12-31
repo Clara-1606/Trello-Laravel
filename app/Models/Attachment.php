@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Le modèle Attachment qui est lié à la table attachments dans la base de données
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class Attachment extends Model
 {
     use HasFactory;
@@ -24,20 +31,25 @@ class Attachment extends Model
     protected $table = 'attachments';
 
 
-    /**
- * Obtient l'utilisateur qui possède le fichier
- */
+  /**
+     * Renvoi l'utilisateur qui a posé la pièce jointe
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
-{
-    return $this->belongsTo('App\Models\User');
-}
+    {
+        return $this->belongsTo(User::class);
+    }
 
-/**
- * Obtient la task qui possède le fichier
- */
-public function task()
-{
-    return $this->belongsTo('App\Models\Task');
-}
+
+    /**
+     * Renvoi la tâche à laquelle la pièce jointe est attachée
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function task()
+    {
+        return $this->belongsTo('App\Models\Task');
+    }
 }
 

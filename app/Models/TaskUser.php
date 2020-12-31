@@ -5,10 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+/**
+ * Classe pivot qui met en relation les tâches et les utilisateurs
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
 
 class TaskUser extends Pivot
 {
     use HasFactory;
+
+    /**
+     * The "booted" method of the model.
+     *
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        //Si la fonction renvoie faux, la création ne se fait pas, sinon elle le fait
+        static::creating(function ($task_user) {
+            return $task_user->task->board->users->find($task_user->user_id)!==null;
+        });
+    }
+
      /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -30,17 +51,25 @@ class TaskUser extends Pivot
      */
     protected $table = 'task_user';
 
-    /**
-     * Obtient l'utilisateur qui a la task
+     /**
+     * Renvoi l'utilisateur lié à la tâche
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user (){
-        return $this ->belongsTo("App\Models\User");
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
+
     /**
-     * Obtient la tâche qu'à l'utilisateur
+     * Renvoi la tâche liée à l'utilisateur
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function task (){
-        return $this ->belongsTo("App\Models\Task");
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
     }
+
 }

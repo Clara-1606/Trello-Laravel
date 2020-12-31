@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Display a category')
 
@@ -14,6 +14,7 @@
     <tr>
         <td>{{$category->id}}</td>
         <td>{{$category->name}}</td>
+        <td> <a class="btn btn-info" href="{{route('categories.show',$category->id)}}"> Voir</a></td>
         <td> <a class="btn btn-success" href="{{route('categories.edit',$category->id)}}"> Modifer</a></td>
         <td> <form action="{{route('categories.destroy',$category->id)}}" method="post">
         @csrf
@@ -24,6 +25,10 @@
 @endforeach
 </table>
 
-<a class="btn btn-info" href="{{route('categories.create')}}"> Ajouter une catégorie</a>
+<a class="btn btn-primary" href="{{route('categories.create')}}"> Ajouter une catégorie</a>
+<br/><br/>
 
+<div class="row">
+<a class="btn btn-primary m-auto" href="{{route('boards.index')}}"> Retour </a>
+</div>
 @endsection

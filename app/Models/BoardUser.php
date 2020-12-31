@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Classe pivot qui met en relation les boards et les utilisateurs
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class BoardUser extends Pivot
 {
     use HasFactory;
@@ -30,23 +37,37 @@ class BoardUser extends Pivot
     protected $table = 'board_user';
 
 /**
-     * Obtient l'utilisateur qui a le board
+     * Renvoi l'utilisateur lié au board
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(){
-        return $this->belongsTo("App\Models\User");
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    /**
+     * Renvoi le board lié à l'utilisateur
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function board()
+    {
+        return $this->belongsTo(Board::class);
     }
 
     /**
-     * Obtient le board qui a l'utilisateur
+     * Permet de récupérer toutes les tâches de la board. 
+     * Servira de lien pour récupérer les tâches d'un utilisateur
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function board(){
-        return $this->belongsTo("App\Models\Board");
+    public function tasks() {
+        return $this->hasManyThrough(Task::class, Board::class, 'id', 'board_id', 'board_id');
     }
-
-    /**
-     * Obtient les tâches du board
-     */
-    public function tasks(){
-        return $this->hasMany("App\Models\Task");
+        //1 --> Clé étrangère dans board, sauf qu'il y en a pas, 
+        //2 --> Clé étrangère de la table Task
+        //3 --> board id qu'on utilise dans board_user
+        //select `tasks`.*, `boards`.`id` as `laravel_through_key` from `tasks` inner join `boards` on `boards`.`id` = ` tasks`.`board_id` where `boards`.`id` = 3
     }
-}

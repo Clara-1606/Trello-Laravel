@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Le modèle Category qui est lié à la table categories dans la base de données
+ * 
+ * @author Clara Vesval B2B Info <clara.vesval@ynov.com>
+ * 
+ */
+
 class Category extends Model
 {
     use HasFactory;
@@ -22,9 +29,13 @@ class Category extends Model
      */
     protected $table = 'categories';
 
+    
     /**
-     * Obtient les tasks qui ont la catégorie
+     * Renvoi la liste des tâches possédant cette catégorie
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+
     public function tasks()
 {
     return $this->hasMany('App\Models\Task');

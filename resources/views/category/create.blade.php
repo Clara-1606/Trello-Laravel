@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Create a category')
 
@@ -15,4 +15,8 @@
     <button type="submit"> Sauvegarder </button>
 
 </form>
+
+<div class="row">
+    <a class="btn btn-primary m-auto" href="{{route('categories.index')}}"> Retour </a>
+    </div>
 @endsection
