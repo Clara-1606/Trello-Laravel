@@ -66,4 +66,4 @@ J'ai eu et j'ai encore un problème sur la barre de navigation.
 En effet j'ai mis de temps à comprendre comment l'intégrer dans mes pages alors qu'elle y était dans la page dashboard mais je ne trouvais pas comment, alors j'ai rajouté le layouts.app mais cela n'utilisait pas les mêmes styles que moi alors cela n'avait pas bien marché comme je voulais.
 Puis j'ai trouvé : @livewire('navigation-dropdown'), cela avait l'air de fonctionné, mais quand je clique sur mon nom, il n'apparait pas mon profil et pour se déconnecter.
 Je n'ai pas compris pourquoi, alors j'ai ensuite essayé de copier ce qu'il y avait dans navigation-dropdown, mais même problème.
-Alors désolé pour se déconnecter il faut aller dans dashboard !
+Alors désolé pour se déconnecter il faut aller dans dashboard ou profile !
