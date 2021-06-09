@@ -25,10 +25,10 @@ Vous aurez à créer une base de données dans MySQL :
 Une fois dans mysql 
 
 ```sql 
-CREATE DATABASE homeagame;
+CREATE DATABASE todo;
  -- CREATE USER  laravel@localhost IDENTIFIED BY 'L4R4V3l' ; --  À faire si vous n'avez pas déjà un utilisateur autre que root
  -- On donne les droit à l'utilisateur
- GRANT ALL ON homeagame.* TO laravel@localhost; 
+ GRANT ALL ON todo.* TO laravel@localhost; 
 ```
 
 Copier le fichier `.env.example` en `.env` : 
