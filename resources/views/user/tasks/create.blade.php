@@ -20,7 +20,7 @@
     <div class="form-group">
     <label for='categorie'> Catégorie </label>
     <select name='category' id='category'>
-        @foreach ($categories as $category) { ?>
+        @foreach ($categories as $category) 
             <option value={{$category->id}}> {{$category->name}}</option>
         @endforeach
     </select>
